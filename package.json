@@ -1,0 +1,20 @@
+{
+  "name": "fastify-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "fastify": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "nodemon": "^3.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
