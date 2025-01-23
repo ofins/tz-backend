@@ -1,12 +1,18 @@
-// Import Fastify
+import axios from "axios";
 import Fastify from "fastify";
-// Initialize Fastify
 const fastify = Fastify({ logger: true });
-// Define a simple API route
 fastify.get("/api", async (request, reply) => {
-    return { message: "Hello, Fastify with ESModules!" };
+    try {
+        const { data } = await axios.get("https://tama.meme/api/tokens?sortDirection=desc&sortBy=lastFeatured&page=1&limit=12");
+        return { message: "Data fetched successfully!", data };
+    }
+    catch (error) {
+        fastify.log.error(error);
+        const status = error.response?.status || 500;
+        const errorMessage = error.response?.data?.message || error.message;
+        reply.status(status).send({ error: errorMessage });
+    }
 });
-// Start the server
 const start = async () => {
     try {
         await fastify.listen({ port: 3000, host: "0.0.0.0" });
