@@ -5,5 +5,7 @@ export enum TamaRouteEnum {
 
 export enum RoutesEnum {
   GET_TOKENS = "/v1/services/tokens",
+  GET_TOKEN = "/v1/services/tokens/:id",
+
   GET_TRADES = "/v1/services/trades",
 }
