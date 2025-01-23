@@ -15,6 +15,7 @@ interface QueryParams {
   page?: number;
   limit?: number;
   tokenId?: number;
+  searchTerm?: string;
 }
 
 interface RouteParams {
@@ -39,6 +40,7 @@ fastify.get(
         sortBy = "lastFeatured",
         page = 1,
         limit = 25,
+        searchTerm = "",
       } = request.query;
 
       if (typeof page !== "string" || page <= 0) {
@@ -53,9 +55,16 @@ fastify.get(
           .send({ error: "Limit must be a positive number." });
       }
 
-      const apiUrl = `${TAMA_BASE_URL}${TamaRouteEnum.GET_TOKENS}?sortDirection=${sortDirection}&sortBy=${sortBy}&page=${page}&limit=${limit}`;
+      const apiUrl = new URL(TAMA_BASE_URL + TamaRouteEnum.GET_TOKENS);
+      apiUrl.search = new URLSearchParams({
+        sortDirection,
+        sortBy,
+        page,
+        limit,
+        searchTerm,
+      }).toString();
 
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(apiUrl.toString());
 
       return { message: "Data fetched successfully!", data };
     } catch (error: any) {
@@ -121,9 +130,14 @@ fastify.get(
           .send({ error: "Limit must be a positive number." });
       }
 
-      const apiUrl = `${TAMA_BASE_URL}${TamaRouteEnum.GET_TRADES}?tokenId=${tokenId}&page=${page}&limit=${limit}`;
+      const apiUrl = new URL(TAMA_BASE_URL + TamaRouteEnum.GET_TRADES);
+      apiUrl.search = new URLSearchParams({
+        tokenId,
+        page,
+        limit,
+      }).toString();
 
-      const { data } = await axios.get(apiUrl);
+      const { data } = await axios.get(apiUrl.toString());
 
       return { message: "Data fetched successfully!", data };
     } catch (error: any) {
