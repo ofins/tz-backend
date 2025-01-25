@@ -1,9 +1,9 @@
+import cors from "@fastify/cors";
 import axios from "axios";
+import * as dotenv from "dotenv";
 import Fastify, { FastifyReply, FastifyRequest } from "fastify";
 import { RoutesEnum, TamaRouteEnum } from "./types/routes.enum.js";
-import * as dotenv from "dotenv";
 dotenv.config();
-import cors from "@fastify/cors";
 
 const fastify = Fastify({ logger: true });
 
@@ -12,8 +12,8 @@ export const TAMA_BASE_URL = process.env.ENV_TAMA_BASE_URL;
 interface QueryParams {
   sortDirection?: string;
   sortBy?: string;
-  page?: number;
-  limit?: number;
+  current?: number;
+  pageSize?: number;
   tokenId?: number;
   searchTerm?: string;
 }
@@ -38,18 +38,18 @@ fastify.get(
       const {
         sortDirection = "desc",
         sortBy = "lastFeatured",
-        page = 1,
-        limit = 25,
+        current = 1,
+        pageSize = 25,
         searchTerm = "",
       } = request.query;
 
-      if (typeof page !== "string" || page <= 0) {
+      if (typeof current !== "string" || current <= 0) {
         return reply
           .status(400)
           .send({ error: "Page must be a positive number." });
       }
 
-      if (typeof limit !== "string" || limit <= 0) {
+      if (typeof pageSize !== "string" || pageSize <= 0) {
         return reply
           .status(400)
           .send({ error: "Limit must be a positive number." });
@@ -59,8 +59,8 @@ fastify.get(
       apiUrl.search = new URLSearchParams({
         sortDirection,
         sortBy,
-        page,
-        limit,
+        page: current,
+        limit: pageSize,
         searchTerm,
       }).toString();
 
@@ -110,7 +110,7 @@ fastify.get(
     reply: FastifyReply
   ) => {
     try {
-      const { tokenId = null, page = 1, limit = 25 } = request.query;
+      const { tokenId = null, current = 1, pageSize = 25 } = request.query;
 
       if (typeof tokenId !== "string" || tokenId <= 0) {
         return reply
@@ -118,13 +118,13 @@ fastify.get(
           .send({ error: "Token ID must be a positive number." });
       }
 
-      if (typeof page !== "string" || page <= 0) {
+      if (typeof current !== "string" || current <= 0) {
         return reply
           .status(400)
           .send({ error: "Page must be a positive number." });
       }
 
-      if (typeof limit !== "string" || limit <= 0) {
+      if (typeof pageSize !== "string" || pageSize <= 0) {
         return reply
           .status(400)
           .send({ error: "Limit must be a positive number." });
@@ -133,8 +133,8 @@ fastify.get(
       const apiUrl = new URL(TAMA_BASE_URL + TamaRouteEnum.GET_TRADES);
       apiUrl.search = new URLSearchParams({
         tokenId,
-        page,
-        limit,
+        page: current,
+        limit: pageSize,
       }).toString();
 
       const { data } = await axios.get(apiUrl.toString());
