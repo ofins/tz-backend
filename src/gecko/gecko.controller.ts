@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { autoBindMethods } from "../utils/common.ts";
-import { GeckoService } from "./gecko.service.ts";
+import { GeckoService } from "../gecko/gecko.service";
+import { autoBindMethods } from "../utils/common";
 
 interface BodyParams {
   addresses?: string;

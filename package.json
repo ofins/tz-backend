@@ -1,11 +1,11 @@
 {
   "name": "fastify-server",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "build:watch": "npm run build -- --watch"
   },
   "dependencies": {
     "@fastify/cors": "^8.0.0",

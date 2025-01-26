@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { RouteParams } from "../types/common.types.ts";
-import { QueryParams } from "../types/tama.types.ts";
-import { autoBindMethods, validatePaginationParams } from "../utils/common.ts";
-import { TokensService } from "./tokens.service.ts";
+import { RouteParams } from "../types/common.types";
+import { QueryParams } from "../types/tama.types";
+import { autoBindMethods, validatePaginationParams } from "../utils/common";
+import { TokensService } from "./tokens.service";
 
 export class TokensController {
   private tokensService: TokensService;

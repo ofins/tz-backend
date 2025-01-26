@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { RoutesEnum } from "../types/routes.enum.ts";
-import { GeckoController } from "./gecko.controller.ts";
+import { RoutesEnum } from "../types/routes.enum";
+import { GeckoController } from "./gecko.controller";
 
 const controller = new GeckoController();
 

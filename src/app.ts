@@ -1,12 +1,12 @@
 import cors from "@fastify/cors";
 import Fastify from "fastify";
 import pino from "pino";
-import { stream } from "./config/common.ts";
-import { geckoRoute } from "./gecko/gecko.route.ts";
-import { tokensRoute } from "./tokens/tokens.route.ts";
+import { stream } from "./config/common";
+import { geckoRoute } from "./gecko/gecko.route";
+import { tokensRoute } from "./tokens/tokens.route";
 
 const fastify = Fastify({
-  logger: pino.default(
+  logger: pino(
     {
       level: "info",
       formatters: {

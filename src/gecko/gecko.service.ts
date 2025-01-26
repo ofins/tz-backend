@@ -1,6 +1,6 @@
 import { FastifyReply } from "fastify";
-import { CoinGeckoEndpointEnum } from "../types/routes.enum.ts";
-import { COIN_GECKO_API_URL, fetchData } from "../utils/common.ts";
+import { CoinGeckoEndpointEnum } from "../types/routes.enum";
+import { COIN_GECKO_API_URL, fetchData } from "../utils/common";
 
 export class GeckoService {
   public async fetchMultiTokenOnNetwork(

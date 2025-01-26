@@ -1,6 +1,6 @@
 import { FastifyReply } from "fastify";
-import { TamaRouteEnum } from "../types/routes.enum.ts";
-import { fetchData, TAMA_BASE_URL } from "../utils/common.ts";
+import { TamaRouteEnum } from "../types/routes.enum";
+import { fetchData, TAMA_BASE_URL } from "../utils/common";
 
 export class TokensService {
   public async fetchTokenList(requestQuery: any, reply: FastifyReply) {

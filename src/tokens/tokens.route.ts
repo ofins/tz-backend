@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { RoutesEnum } from "../types/routes.enum.ts";
-import { TokensController } from "./tokens.controller.ts";
+import { RoutesEnum } from "../types/routes.enum";
+import { TokensController } from "./tokens.controller";
 
 const controller = new TokensController();
 
