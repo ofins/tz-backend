@@ -1,4 +1,9 @@
+import * as dotenv from "dotenv";
 import { FastifyReply } from "fastify";
+
+dotenv.config();
+
+export const TAMA_BASE_URL = process.env.ENV_TAMA_BASE_URL;
 
 export function autoBindMethods(
   instance: any,

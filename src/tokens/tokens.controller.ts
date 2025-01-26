@@ -39,4 +39,44 @@ export class TokensController {
       reply
     );
   }
+
+  public async getTokenHolder(
+    request: FastifyRequest<{ Querystring: QueryParams }>,
+    reply: FastifyReply
+  ) {
+    const { holderAddress = "", current = 1, pageSize = 20 } = request.query;
+
+    if (typeof holderAddress !== "string") {
+      return reply
+        .status(400)
+        .send({ error: "Token ID must be a positive number." });
+    }
+
+    if (!validatePaginationParams(current, pageSize, reply)) return;
+
+    return await this.tokensService.fetchTokenHolder(
+      { holderAddress, current, pageSize },
+      reply
+    );
+  }
+
+  public async getTrades(
+    request: FastifyRequest<{ Querystring: QueryParams }>,
+    reply: FastifyReply
+  ) {
+    const { tokenId = null, current = 1, pageSize = 25 } = request.query;
+
+    if (typeof tokenId !== "string" || +tokenId <= 0) {
+      return reply
+        .status(400)
+        .send({ error: "Token ID must be a positive number." });
+    }
+
+    if (!validatePaginationParams(current, pageSize, reply)) return;
+
+    return await this.tokensService.fetchTrades(
+      { tokenId, current, pageSize },
+      reply
+    );
+  }
 }
