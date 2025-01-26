@@ -12,15 +12,15 @@ export class TokensController {
     autoBindMethods(this);
   }
 
-  public async getTokenList(
+  public async getTokenDetail(
     request: FastifyRequest<{ Params: RouteParams }>,
     reply: FastifyReply
   ) {
     const { id } = request.params;
-    return await this.tokensService.fetchTokenList(id, reply);
+    return await this.tokensService.fetchTokenDetail(id, reply);
   }
 
-  public async getTokenBySearchTerm(
+  public async getTokenList(
     request: FastifyRequest<{ Querystring: QueryParams }>,
     reply: FastifyReply
   ) {
@@ -34,7 +34,7 @@ export class TokensController {
 
     if (!validatePaginationParams(current, pageSize, reply)) return;
 
-    return await this.tokensService.fetchTokensBySearchTerm(
+    return await this.tokensService.fetchTokenList(
       { sortDirection, sortBy, current, pageSize, searchTerm },
       reply
     );

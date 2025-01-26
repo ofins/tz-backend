@@ -1,22 +1,9 @@
-import axios from "axios";
 import { FastifyReply } from "fastify";
 import { TamaRouteEnum } from "../types/routes.enum.ts";
-import { TAMA_BASE_URL } from "../utils/common.ts";
-
-const fetchData = async (apiUrl: string, reply: FastifyReply) => {
-  try {
-    const { data } = await axios.get(apiUrl);
-    return { message: "Data fetched successfully!", data };
-  } catch (error: any) {
-    reply.log.error(error);
-    const status = error.response?.status || 500;
-    const errorMessage = error.response?.data?.message || error.message;
-    reply.status(status).send({ error: errorMessage });
-  }
-};
+import { fetchData, TAMA_BASE_URL } from "../utils/common.ts";
 
 export class TokensService {
-  public async fetchTokensBySearchTerm(requestQuery: any, reply: FastifyReply) {
+  public async fetchTokenList(requestQuery: any, reply: FastifyReply) {
     const { sortDirection, sortBy, current, pageSize, searchTerm } =
       requestQuery;
 
@@ -31,7 +18,7 @@ export class TokensService {
     return fetchData(apiUrl.toString(), reply);
   }
 
-  public async fetchTokenList(id: string, reply: FastifyReply) {
+  public async fetchTokenDetail(id: string, reply: FastifyReply) {
     const apiUrl = `${TAMA_BASE_URL}${TamaRouteEnum.GET_TOKENS}/${id}`;
     return fetchData(apiUrl, reply);
   }

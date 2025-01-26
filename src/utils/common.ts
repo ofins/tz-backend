@@ -1,9 +1,11 @@
+import axios from "axios";
 import * as dotenv from "dotenv";
 import { FastifyReply } from "fastify";
 
 dotenv.config();
 
 export const TAMA_BASE_URL = process.env.ENV_TAMA_BASE_URL;
+export const COIN_GECKO_API_URL = process.env.ENV_COINGECKO_URL;
 
 export function autoBindMethods(
   instance: any,
@@ -30,4 +32,16 @@ export const validatePaginationParams = (
     return false;
   }
   return true;
+};
+
+export const fetchData = async (apiUrl: string, reply: FastifyReply) => {
+  try {
+    const { data } = await axios.get(apiUrl);
+    return { message: "Data fetched successfully!", data };
+  } catch (error: any) {
+    reply.log.error(error);
+    const status = error.response?.status || 500;
+    const errorMessage = error.response?.data?.message || error.message;
+    reply.status(status).send({ error: errorMessage });
+  }
 };
